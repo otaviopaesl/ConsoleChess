@@ -16,7 +16,10 @@ namespace ConsoleChess
                 brd.PutPiece(new Tower(brd, Color.Black), new Position(1, 3));
                 brd.PutPiece(new King(brd, Color.Black), new Position(2, 4));
 
-                Screen.PrintBoard(brd);
+                //Screen.PrintBoard(brd);
+
+                ChessPosition pos = new ChessPosition('c', 7);
+                Console.WriteLine(pos.ToPosition());
             }
 
             catch (BoardException e)
