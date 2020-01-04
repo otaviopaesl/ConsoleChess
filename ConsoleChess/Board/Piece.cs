@@ -14,5 +14,10 @@
             Brd = board;
             MovementsQty = 0;
         }
+
+        public void MovementsQtyIncrement()
+        {
+            MovementsQty++;
+        }
     }
 }
