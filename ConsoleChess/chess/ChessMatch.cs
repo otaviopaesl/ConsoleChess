@@ -6,15 +6,15 @@ namespace chess
     class ChessMatch
     {
         public Board Brd { get; private set; }
-        private int Turn;
-        private Color ActualPlayer;
+        public int Turn { get; private set; }
+        public Color CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
 
         public ChessMatch()
         {
             Brd = new Board(8, 8);
             Turn = 1;
-            ActualPlayer = Color.White;
+            CurrentPlayer = Color.White;
             Finished = false;
             MountBoard();
         }
@@ -25,6 +25,52 @@ namespace chess
             P.MovementsQtyIncrement();
             Piece CapturedPiece = Brd.RemovePiece(destination);
             Brd.PutPiece(P, destination);
+        }
+
+        public void MakePlay(Position origin, Position destination)
+        {
+            RunMovement(origin, destination);
+            Turn++;
+            ChangePlayer();
+
+        }
+
+        public void ValidateOriginPosition(Position pos)
+        {
+            if (Brd.Piece(pos) == null)
+            {
+                throw new BoardException("There is no piece in the chosen origin position!");
+            }
+
+            if (CurrentPlayer != Brd.Piece(pos).Color)
+            {
+                throw new BoardException("The chosen piece is not yours!");
+            }
+
+            if (!Brd.Piece(pos).IsTherePossibleMovements())
+            {
+                throw new BoardException("There is no possible movements for the chosen piece!");
+            }
+        }
+
+        public void ValidadeDestinationPosition(Position origin, Position destination)
+        {
+            if (!Brd.Piece(origin).CanMoveTo(destination))
+            {
+                throw new BoardException("Invalid destination position!");
+            }
+        }
+
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Color.White)
+            {
+                CurrentPlayer = Color.Black;
+            }
+            else
+            {
+                CurrentPlayer = Color.White;
+            }
         }
 
         public void MountBoard()
