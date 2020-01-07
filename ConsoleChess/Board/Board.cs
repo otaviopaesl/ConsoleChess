@@ -44,7 +44,7 @@ namespace board
 
         public Piece RemovePiece(Position pos)
         {
-            if (!IsTherePiece(pos))
+            if (Piece(pos)== null)
             {
                 return null;
             }

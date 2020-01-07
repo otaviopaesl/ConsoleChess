@@ -35,19 +35,60 @@ namespace chess
             {
                 Captured.Add(CapturedPiece);
             }
+            
+            //#Special Play: Castling short
+            if (P is King && destination.Column == origin.Column + 2)
+            {
+                Position originR = new Position(origin.Row, origin.Column + 3);
+                Position destinationR = new Position(origin.Row, origin.Column + 1);
+                Piece R = Brd.RemovePiece(originR);
+                R.IncreaseMovementsQty();
+                Brd.PutPiece(R, destinationR);
+            }
+
+            //#Special Play: Castling long
+            if (P is King && destination.Column == origin.Column - 2)
+            {
+                Position originR = new Position(origin.Row, origin.Column - 4);
+                Position destinationR = new Position(origin.Row, origin.Column - 1);
+                Piece R = Brd.RemovePiece(originR);
+                R.IncreaseMovementsQty();
+                Brd.PutPiece(R, destinationR);
+            }
+
             return CapturedPiece;
         }
 
         public void UndoMovement(Position origin, Position destination, Piece capturedPiece)
         {
-            Piece p = Brd.RemovePiece(destination);
-            p.ReduceMovementsQty();
+            Piece P = Brd.RemovePiece(destination);
+            P.DecreaseMovementsQty();
             if (capturedPiece != null)
             {
                 Brd.PutPiece(capturedPiece, destination);
                 Captured.Remove(capturedPiece);
             }
-            Brd.PutPiece(p, origin);
+            Brd.PutPiece(P, origin);
+
+            //#Special Play: Castling short
+            if (P is King && destination.Column == origin.Column + 2)
+            {
+                Position originR = new Position(origin.Row, origin.Column + 3);
+                Position destinationR = new Position(origin.Row, origin.Column + 1);
+                Piece R = Brd.RemovePiece(destinationR);
+                R.DecreaseMovementsQty();
+                Brd.PutPiece(R, originR);
+            }
+
+            //#Special Play: Castling long
+            if (P is King && destination.Column == origin.Column - 2)
+            {
+                Position originR = new Position(origin.Row, origin.Column - 4);
+                Position destinationR = new Position(origin.Row, origin.Column - 1);
+                Piece R = Brd.RemovePiece(destinationR);
+                R.DecreaseMovementsQty();
+                Brd.PutPiece(R, originR);
+            }
         }
 
         public void MakeThePlay(Position origin, Position destination)
@@ -202,7 +243,7 @@ namespace chess
                         {
                             Position origin = p.Position;
                             Position destination = new Position(i, j);
-                            Piece capturedPiece = RunMovement(origin,destination);
+                            Piece capturedPiece = RunMovement(origin, destination);
                             bool checkTest = IsItChecked(color);
                             UndoMovement(origin, destination, capturedPiece);
                             if (!checkTest)
@@ -224,15 +265,15 @@ namespace chess
 
         public void MountBoard()
         {
-            
-            PutNewPiece('a', 1, new Tower(Brd, Color.White));
-            PutNewPiece('b', 1, new Horse(Brd, Color.White));
+
+            PutNewPiece('a', 1, new Rook(Brd, Color.White));
+            PutNewPiece('b', 1, new Knight(Brd, Color.White));
             PutNewPiece('c', 1, new Bishop(Brd, Color.White));
             PutNewPiece('d', 1, new Queen(Brd, Color.White));
-            PutNewPiece('e', 1, new King(Brd, Color.White));
+            PutNewPiece('e', 1, new King(Brd, Color.White, this));
             PutNewPiece('f', 1, new Bishop(Brd, Color.White));
-            PutNewPiece('g', 1, new Horse(Brd, Color.White));
-            PutNewPiece('h', 1, new Tower(Brd, Color.White));
+            PutNewPiece('g', 1, new Knight(Brd, Color.White));
+            PutNewPiece('h', 1, new Rook(Brd, Color.White));
             PutNewPiece('a', 2, new Pawn(Brd, Color.White));
             PutNewPiece('b', 2, new Pawn(Brd, Color.White));
             PutNewPiece('c', 2, new Pawn(Brd, Color.White));
@@ -241,15 +282,16 @@ namespace chess
             PutNewPiece('f', 2, new Pawn(Brd, Color.White));
             PutNewPiece('g', 2, new Pawn(Brd, Color.White));
             PutNewPiece('h', 2, new Pawn(Brd, Color.White));
+            
 
-            PutNewPiece('a', 8, new Tower(Brd, Color.Black));
-            PutNewPiece('b', 8, new Horse(Brd, Color.Black));
+            PutNewPiece('a', 8, new Rook(Brd, Color.Black));
+            PutNewPiece('b', 8, new Knight(Brd, Color.Black));
             PutNewPiece('c', 8, new Bishop(Brd, Color.Black));
             PutNewPiece('d', 8, new Queen(Brd, Color.Black));
-            PutNewPiece('e', 8, new King(Brd, Color.Black));
+            PutNewPiece('e', 8, new King(Brd, Color.Black, this));
             PutNewPiece('f', 8, new Bishop(Brd, Color.Black));
-            PutNewPiece('g', 8, new Horse(Brd, Color.Black));
-            PutNewPiece('h', 8, new Tower(Brd, Color.Black));
+            PutNewPiece('g', 8, new Knight(Brd, Color.Black));
+            PutNewPiece('h', 8, new Rook(Brd, Color.Black));
             PutNewPiece('a', 7, new Pawn(Brd, Color.Black));
             PutNewPiece('b', 7, new Pawn(Brd, Color.Black));
             PutNewPiece('c', 7, new Pawn(Brd, Color.Black));

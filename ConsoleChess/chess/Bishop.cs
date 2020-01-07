@@ -33,7 +33,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row - 1, Position.Column + 1);
+                pos.SetValues(pos.Row - 1, pos.Column + 1);
             }
 
             //North-West
@@ -45,7 +45,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row - 1, Position.Column - 1);
+                pos.SetValues(pos.Row - 1, pos.Column - 1);
             }
 
             //South-East
@@ -57,7 +57,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row + 1, Position.Column + 1);
+                pos.SetValues(pos.Row + 1, pos.Column + 1);
             }
 
             //South-West
@@ -69,7 +69,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row + 1, Position.Column - 1);
+                pos.SetValues(pos.Row + 1, pos.Column - 1);
             }
 
             return mat;

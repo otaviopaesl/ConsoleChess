@@ -20,7 +20,7 @@
             MovementsQty++;
         }
 
-        public void ReduceMovementsQty()
+        public void DecreaseMovementsQty()
         {
             MovementsQty--;
         }

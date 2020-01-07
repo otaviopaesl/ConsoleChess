@@ -4,8 +4,11 @@ namespace chess
 {
     class King : Piece
     {
-        public King(Board brd, Color color) : base(color, brd)
+        private ChessMatch Match;
+
+        public King(Board brd, Color color, ChessMatch match) : base(color, brd)
         {
+            Match = match;
         }
 
         public override string ToString()
@@ -17,6 +20,12 @@ namespace chess
         {
             Piece p = Brd.Piece(pos);
             return p == null || p.Color != Color;
+        }
+
+        private bool CastlingTest(Position pos)
+        {
+            Piece p = Brd.Piece(pos);
+            return p != null && p is Rook && p.Color == Color && p.MovementsQty == 0;
         }
 
         public override bool[,] PossibleMovements()
@@ -79,6 +88,38 @@ namespace chess
             {
                 mat[pos.Row, pos.Column] = true;
             }
+
+            //#Special Play: Castling
+            if (MovementsQty == 0 && !Match.Check)
+            {
+                //Castling Short
+                Position posR1 = new Position(Position.Row, Position.Column + 3);
+                if (CastlingTest(posR1))
+                {
+                    Position p1 = new Position(Position.Row, Position.Column + 1);
+                    Position p2 = new Position(Position.Row, Position.Column + 2);
+                    if (Brd.Piece(p1) == null && Brd.Piece(p2) == null)
+                    {
+                        mat[Position.Row, Position.Column + 2] = true;
+                    }
+                }
+
+                //Castling Long
+                Position posR2 = new Position(Position.Row, Position.Column -4);
+                if (CastlingTest(posR2))
+                {
+                    Position p1 = new Position(Position.Row, Position.Column - 1);
+                    Position p2 = new Position(Position.Row, Position.Column - 2);
+                    Position p3 = new Position(Position.Row, Position.Column - 3);
+                    if (Brd.Piece(p1) == null && Brd.Piece(p2) == null && Brd.Piece(p3) == null)
+                    {
+                        mat[Position.Row, Position.Column - 2] = true;
+                    }
+                }
+            }
+
+
+
 
             return mat;
         }

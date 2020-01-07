@@ -38,7 +38,8 @@ namespace chess
                 }
 
                 pos.SetValues(Position.Row - 2, Position.Column);
-                if (Brd.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
+                Position p2 = new Position(Position.Row - 1, Position.Column);
+                if (Brd.IsValidPosition(p2) && Free(p2) && Brd.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }
@@ -65,7 +66,8 @@ namespace chess
                 }
 
                 pos.SetValues(Position.Row + 2, Position.Column);
-                if (Brd.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
+                Position p2 = new Position(Position.Row + 1, Position.Column);
+                if (Brd.IsValidPosition(p2) && Free(p2) && Brd.IsValidPosition(pos) && Free(pos) && MovementsQty == 0)
                 {
                     mat[pos.Row, pos.Column] = true;
                 }

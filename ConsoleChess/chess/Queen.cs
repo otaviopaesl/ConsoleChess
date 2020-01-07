@@ -1,4 +1,5 @@
 ﻿using board;
+
 namespace chess
 {
     class Queen : Piece
@@ -45,7 +46,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row - 1, Position.Column + 1);
+                pos.SetValues(pos.Row - 1, pos.Column + 1);
             }
 
             //East
@@ -70,7 +71,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row + 1, Position.Column + 1);
+                pos.SetValues(pos.Row + 1, pos.Column + 1);
             }
 
 
@@ -96,7 +97,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row + 1, Position.Column - 1);
+                pos.SetValues(pos.Row + 1, pos.Column - 1);
             }
 
             //West
@@ -120,7 +121,7 @@ namespace chess
                 {
                     break;
                 }
-                pos.SetValues(Position.Row - 1, Position.Column - 1);
+                pos.SetValues(pos.Row - 1, pos.Column - 1);
             }
 
             return mat;
