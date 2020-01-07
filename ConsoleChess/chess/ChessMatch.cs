@@ -224,28 +224,40 @@ namespace chess
 
         public void MountBoard()
         {
-            /*
-            PutNewPiece('c', 1, new Tower(Brd, Color.White));
-            PutNewPiece('c', 2, new Tower(Brd, Color.White));
-            PutNewPiece('d', 2, new Tower(Brd, Color.White));
-            PutNewPiece('e', 2, new Tower(Brd, Color.White));
-            PutNewPiece('e', 1, new Tower(Brd, Color.White));
-            PutNewPiece('d', 1, new King(Brd, Color.White));
+            
+            PutNewPiece('a', 1, new Tower(Brd, Color.White));
+            PutNewPiece('b', 1, new Horse(Brd, Color.White));
+            PutNewPiece('c', 1, new Bishop(Brd, Color.White));
+            PutNewPiece('d', 1, new Queen(Brd, Color.White));
+            PutNewPiece('e', 1, new King(Brd, Color.White));
+            PutNewPiece('f', 1, new Bishop(Brd, Color.White));
+            PutNewPiece('g', 1, new Horse(Brd, Color.White));
+            PutNewPiece('h', 1, new Tower(Brd, Color.White));
+            PutNewPiece('a', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('b', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('c', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('d', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('e', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('f', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('g', 2, new Pawn(Brd, Color.White));
+            PutNewPiece('h', 2, new Pawn(Brd, Color.White));
 
-            PutNewPiece('c', 7, new Tower(Brd, Color.Black));
-            PutNewPiece('c', 8, new Tower(Brd, Color.Black));
-            PutNewPiece('d', 7, new Tower(Brd, Color.Black));
-            PutNewPiece('e', 7, new Tower(Brd, Color.Black));
-            PutNewPiece('e', 8, new Tower(Brd, Color.Black));
-            PutNewPiece('d', 8, new King(Brd, Color.Black));
-            */
-            PutNewPiece('c', 1, new Tower(Brd, Color.White));
-            PutNewPiece('d', 1, new King(Brd, Color.White));
-            PutNewPiece('h', 7, new Tower(Brd, Color.White));
-
-            PutNewPiece('a', 8, new King(Brd, Color.Black));
-            PutNewPiece('b', 8, new Tower(Brd, Color.Black));
-
+            PutNewPiece('a', 8, new Tower(Brd, Color.Black));
+            PutNewPiece('b', 8, new Horse(Brd, Color.Black));
+            PutNewPiece('c', 8, new Bishop(Brd, Color.Black));
+            PutNewPiece('d', 8, new Queen(Brd, Color.Black));
+            PutNewPiece('e', 8, new King(Brd, Color.Black));
+            PutNewPiece('f', 8, new Bishop(Brd, Color.Black));
+            PutNewPiece('g', 8, new Horse(Brd, Color.Black));
+            PutNewPiece('h', 8, new Tower(Brd, Color.Black));
+            PutNewPiece('a', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('b', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('c', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('d', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('e', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('f', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('g', 7, new Pawn(Brd, Color.Black));
+            PutNewPiece('h', 7, new Pawn(Brd, Color.Black));
         }
     }
 }
