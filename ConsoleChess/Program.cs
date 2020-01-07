@@ -17,13 +17,9 @@ namespace ConsoleChess
                     try
                     {
                         Console.Clear();
-                        Screen.PrintBoard(match.Brd);
-                        Console.WriteLine("");
-                        Console.WriteLine("Turn: " + match.Turn);
-                        Console.WriteLine("Waiting play: " + match.CurrentPlayer);
+                        Screen.PrintMatch(match);
 
                         Console.WriteLine("");
-                        Console.WriteLine("Write an origin or q to quit");
                         Console.Write("Origin: ");
                         Position origin = Screen.ReadChessPosition().ToPosition();
                         match.ValidateOriginPosition(origin);
@@ -37,7 +33,7 @@ namespace ConsoleChess
                         Position destination = Screen.ReadChessPosition().ToPosition();
                         match.ValidadeDestinationPosition(origin, destination);
 
-                        match.MakePlay(origin, destination);
+                        match.MakeThePlay(origin, destination);
                     }
 
                     catch(BoardException e)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using board;
 
 namespace chess
@@ -9,6 +9,8 @@ namespace chess
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
+        private HashSet<Piece> Pieces;
+        private HashSet<Piece> Captured;
 
         public ChessMatch()
         {
@@ -16,6 +18,8 @@ namespace chess
             Turn = 1;
             CurrentPlayer = Color.White;
             Finished = false;
+            Pieces = new HashSet<Piece>();
+            Captured = new HashSet<Piece>();
             MountBoard();
         }
 
@@ -25,9 +29,13 @@ namespace chess
             P.MovementsQtyIncrement();
             Piece CapturedPiece = Brd.RemovePiece(destination);
             Brd.PutPiece(P, destination);
+            if (CapturedPiece != null)
+            {
+                Captured.Add(CapturedPiece);
+            }
         }
 
-        public void MakePlay(Position origin, Position destination)
+        public void MakeThePlay(Position origin, Position destination)
         {
             RunMovement(origin, destination);
             Turn++;
@@ -73,22 +81,54 @@ namespace chess
             }
         }
 
+        public HashSet<Piece> CapturedPieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in Captured)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            return aux;
+        }
+
+        public HashSet<Piece> InGamePieces(Color color)
+        {
+            HashSet<Piece> aux = new HashSet<Piece>();
+            foreach (Piece x in Pieces)
+            {
+                if (x.Color == color)
+                {
+                    aux.Add(x);
+                }
+            }
+            aux.ExceptWith(CapturedPieces(color));
+            return aux;
+        }
+
+        public void PutNewPiece(char column, int row, Piece piece)
+        {
+            Brd.PutPiece(piece, new ChessPosition(column, row).ToPosition());
+            Pieces.Add(piece);
+        }
+
         public void MountBoard()
         {
-            Brd.PutPiece(new Tower(Brd, Color.White), new ChessPosition('c', 1).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.White), new ChessPosition('c', 2).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.White), new ChessPosition('d', 2).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.White), new ChessPosition('e', 2).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.White), new ChessPosition('e', 1).ToPosition());
-            Brd.PutPiece(new King(Brd, Color.White), new ChessPosition('d', 1).ToPosition());
+            PutNewPiece('c', 1, new Tower(Brd, Color.White));
+            PutNewPiece('c', 2, new Tower(Brd, Color.White));
+            PutNewPiece('d', 2, new Tower(Brd, Color.White));
+            PutNewPiece('e', 2, new Tower(Brd, Color.White));
+            PutNewPiece('e', 1, new Tower(Brd, Color.White));
+            PutNewPiece('d', 1, new King(Brd, Color.White));
 
-            Brd.PutPiece(new Tower(Brd, Color.Black), new ChessPosition('c', 7).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.Black), new ChessPosition('c', 8).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.Black), new ChessPosition('d', 7).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.Black), new ChessPosition('e', 7).ToPosition());
-            Brd.PutPiece(new Tower(Brd, Color.Black), new ChessPosition('e', 8).ToPosition());
-            Brd.PutPiece(new King(Brd, Color.Black), new ChessPosition('d', 8).ToPosition());
-
+            PutNewPiece('c', 7, new Tower(Brd, Color.Black));
+            PutNewPiece('c', 8, new Tower(Brd, Color.Black));
+            PutNewPiece('d', 7, new Tower(Brd, Color.Black));
+            PutNewPiece('e', 7, new Tower(Brd, Color.Black));
+            PutNewPiece('e', 8, new Tower(Brd, Color.Black));
+            PutNewPiece('d', 8, new King(Brd, Color.Black));
         }
     }
 }
