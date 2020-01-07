@@ -15,9 +15,14 @@
             MovementsQty = 0;
         }
 
-        public void MovementsQtyIncrement()
+        public void IncreaseMovementsQty()
         {
             MovementsQty++;
+        }
+
+        public void ReduceMovementsQty()
+        {
+            MovementsQty--;
         }
 
         public bool IsTherePossibleMovements()
