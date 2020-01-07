@@ -69,9 +69,15 @@ namespace chess
                 Check = false;
             }
 
-            Turn++;
-            ChangePlayer();
-
+            if (CheckmateTest(Opponent(CurrentPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
         }
 
         public void ValidateOriginPosition(Position pos)
@@ -179,6 +185,37 @@ namespace chess
             return false;
         }
 
+        public bool CheckmateTest(Color color)
+        {
+            if (!IsItChecked(color))
+            {
+                return false;
+            }
+            foreach (Piece p in InGamePieces(color))
+            {
+                bool[,] mat = p.PossibleMovements();
+                for (int i = 0; i < Brd.Rows; i++)
+                {
+                    for (int j = 0; j < Brd.Columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = p.Position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = RunMovement(origin,destination);
+                            bool checkTest = IsItChecked(color);
+                            UndoMovement(origin, destination, capturedPiece);
+                            if (!checkTest)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         public void PutNewPiece(char column, int row, Piece piece)
         {
             Brd.PutPiece(piece, new ChessPosition(column, row).ToPosition());
@@ -187,6 +224,7 @@ namespace chess
 
         public void MountBoard()
         {
+            /*
             PutNewPiece('c', 1, new Tower(Brd, Color.White));
             PutNewPiece('c', 2, new Tower(Brd, Color.White));
             PutNewPiece('d', 2, new Tower(Brd, Color.White));
@@ -200,6 +238,14 @@ namespace chess
             PutNewPiece('e', 7, new Tower(Brd, Color.Black));
             PutNewPiece('e', 8, new Tower(Brd, Color.Black));
             PutNewPiece('d', 8, new King(Brd, Color.Black));
+            */
+            PutNewPiece('c', 1, new Tower(Brd, Color.White));
+            PutNewPiece('d', 1, new King(Brd, Color.White));
+            PutNewPiece('h', 7, new Tower(Brd, Color.White));
+
+            PutNewPiece('a', 8, new King(Brd, Color.Black));
+            PutNewPiece('b', 8, new Tower(Brd, Color.Black));
+
         }
     }
 }
