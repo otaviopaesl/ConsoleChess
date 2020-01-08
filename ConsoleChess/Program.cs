@@ -20,6 +20,7 @@ namespace ConsoleChess
                         Screen.PrintMatch(match);
 
                         Console.WriteLine("");
+                        Console.WriteLine("Write an Origin or press q to quit.");
                         Console.Write("Origin: ");
                         Position origin = Screen.ReadChessPosition().ToPosition();
                         match.ValidateOriginPosition(origin);
@@ -36,21 +37,30 @@ namespace ConsoleChess
                         match.MakeThePlay(origin, destination);
                     }
 
-                    catch(BoardException e)
+                    catch (BoardException e)
                     {
                         Console.Write(e.Message);
                         Console.ReadLine();
                     }
 
+                    catch (ApplicationException)
+                    {
+                        match.Quit = true;
+                        break;
+                    }
+
                 }
+
                 Console.Clear();
                 Screen.PrintMatch(match);
+
             }
 
             catch (BoardException e)
             {
                 Console.Write(e.Message);
             }
+
         }
     }
 }

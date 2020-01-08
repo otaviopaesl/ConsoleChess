@@ -17,10 +17,17 @@ namespace ConsoleChess
 
             if (!match.Finished)
             {
-                Console.WriteLine("Waiting play: " + match.CurrentPlayer);
-                if (match.Check)
+                if (match.Quit)
                 {
-                    Console.WriteLine("CHECK!");
+                    Console.WriteLine("Thanks for playing Console Chess!");
+                }
+                else
+                {
+                    Console.WriteLine("Waiting play: " + match.CurrentPlayer);
+                    if (match.Check)
+                    {
+                        Console.WriteLine("CHECK!");
+                    }
                 }
             }
             else
@@ -102,9 +109,36 @@ namespace ConsoleChess
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
+
+            if (string.IsNullOrEmpty(s) || string.IsNullOrWhiteSpace(s))
+            {
+                throw new BoardException("You need to type something!");
+            }
+
+            if (s == "q")
+            {
+                
+                throw new ApplicationException("Thanks for playing Console Chess!");
+            }
+
+            if (s.Length != 2)
+            {
+                throw new BoardException("You must type a valid position!");
+            }
+
             char column = s[0];
-            int row = int.Parse(s[1] + "");
+            bool correctC = char.IsLetter(column);
+
+            //int row = int.Parse(s[1] + "");
+            bool correctR = int.TryParse(s[1] + "", out int row);
+
+            if (s.Length == 2 && !correctC || s.Length == 2 && !correctR)
+            {
+                throw new BoardException("You must type a valid position!");
+            }
+
             return new ChessPosition(column, row);
+
         }
 
         public static void PrintPiece(Piece piece)

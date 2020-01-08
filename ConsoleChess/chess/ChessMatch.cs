@@ -9,6 +9,7 @@ namespace chess
         public int Turn { get; private set; }
         public Color CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
+        public bool Quit { get; set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
         public bool Check { get; private set; }
@@ -20,6 +21,7 @@ namespace chess
             Turn = 1;
             CurrentPlayer = Color.White;
             Finished = false;
+            Quit = false;
             Check = false;
             VulnerableEnPassant = null;
             Pieces = new HashSet<Piece>();
@@ -206,6 +208,7 @@ namespace chess
             {
                 throw new BoardException("There is no possible movements for the chosen piece!");
             }
+
         }
 
         public void ValidadeDestinationPosition(Position origin, Position destination)
